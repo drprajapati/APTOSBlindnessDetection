@@ -1,0 +1,11 @@
+<resources>
+    <color name="colorPrimary">#fff</color>
+    <color name="colorAccent">#1faa00</color>
+    <color name="colorPrimaryDark">#fafafa</color>
+    <color name="textColorPrimary">#fff</color>
+    <color name="buttonBlue">#1D8ECE</color>
+    <color name="divider">#aaa</color>
+    <color name="appBarColor">#000</color>
+    <color name="lighter_black_bg">#666</color>
+    <color name="dark_black_bg">#191919</color>
+</resources>
