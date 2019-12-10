@@ -52,16 +52,25 @@ public interface Classifier {
         @Override
         public String toString() {
             String resultString = "";
-            if (title != null) {
-                resultString += title + " ";
-            }
+//            if (title != null) {
+//                resultString += title + " ";
+//            }
 
             if (confidence != null) {
-                resultString += String.format("(%.1f%%) ", confidence * 100.0f);
+                resultString +=  confidence * 100.0f;
             }
 
-            return resultString.trim();
+            return resultString;
         }
+
+        public float toFloat(){
+            float result = 0;
+            if (confidence != null) {
+                result = confidence * 100.0f;
+            }
+            return result;
+        }
+        
     }
 
 

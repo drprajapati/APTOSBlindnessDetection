@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import static android.app.Activity.RESULT_OK;
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class ClassifyFragment extends Fragment {
@@ -45,38 +47,104 @@ public class ClassifyFragment extends Fragment {
     private static final int PICK_IMAGE = 1;
     private Classifier classifier;
     private Executor executor = Executors.newSingleThreadExecutor();
-    private TextView textViewResult;
     private Uri imageUri;
     private Button btnDetectObject;
-    private ImageView imageViewResult;
     private AppCompatImageView mImageView;
     private List<Bitmap> mImages;
-    private int mIndex;
-    private CardView mResultCardView;
+    private CircleDisplay noDrCircleDisplay;
+    private CircleDisplay mildCircleDisplay;
+    private CircleDisplay moderateCircleDisplay;
+    private CircleDisplay severeCircleDisplay;
+    private CircleDisplay proliferativeCircleDisplay;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_classify,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_classify, container, false);
         //loadImages();
         windUpWidgets(rootView);
-            btnDetectObject.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        InputStream imageStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri);
-                        Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                        bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
-                        imageViewResult.setImageBitmap(bitmap);
-                        final List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
-                        textViewResult.setText(results.toString());
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    //    Bitmap yourSelectedImage = BitmapFactory.decodeStream(imageStream);
-                }
+        btnDetectObject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    InputStream imageStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+                    bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
+                    final List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
+                    noDrCircleDisplay.setAnimDuration(4000);
+                    noDrCircleDisplay.setValueWidthPercent(55f);
+                    noDrCircleDisplay.setFormatDigits(1);
+                    noDrCircleDisplay.setDimAlpha(80);
+                    noDrCircleDisplay.setTouchEnabled(true);
+                    noDrCircleDisplay.setUnit("%");
+                    noDrCircleDisplay.setColor(R.color.red);
+                    noDrCircleDisplay.setTextSize(10);
+                    noDrCircleDisplay.setStepSize(0.5f);
+                    float resultdrFloat = Float.parseFloat(results.get(0).toString());
+                    noDrCircleDisplay.showValue(resultdrFloat, 100f, true);
 
-            });
+                    if (results.get(1) != null) {
+                        mildCircleDisplay.setAnimDuration(4000);
+                        mildCircleDisplay.setValueWidthPercent(55f);
+                        mildCircleDisplay.setFormatDigits(1);
+                        mildCircleDisplay.setDimAlpha(80);
+                        mildCircleDisplay.setTouchEnabled(true);
+                        mildCircleDisplay.setUnit("%");
+                        mildCircleDisplay.setColor(R.color.red);
+                        mildCircleDisplay.setTextSize(10);
+                        mildCircleDisplay.setStepSize(0.5f);
+                        float resultMildFloat = Float.parseFloat(results.get(1).toString());
+                        mildCircleDisplay.showValue(resultMildFloat, 100f, true);
+                    }
+                    if (results.get(2) != null) {
+                        moderateCircleDisplay.setAnimDuration(4000);
+                        moderateCircleDisplay.setValueWidthPercent(55f);
+                        moderateCircleDisplay.setFormatDigits(1);
+                        moderateCircleDisplay.setDimAlpha(80);
+                        moderateCircleDisplay.setTouchEnabled(true);
+                        moderateCircleDisplay.setUnit("%");
+                        moderateCircleDisplay.setColor(R.color.red);
+                        moderateCircleDisplay.setTextSize(10);
+                        moderateCircleDisplay.setStepSize(0.5f);
+                        float resultModerateFloat = Float.parseFloat(results.get(2).toString());
+                        moderateCircleDisplay.showValue(resultModerateFloat, 100f, true);
+                    }
+                    if (results.get(3) != null) {
+
+                        severeCircleDisplay.setAnimDuration(4000);
+                        severeCircleDisplay.setValueWidthPercent(55f);
+                        severeCircleDisplay.setFormatDigits(1);
+                        severeCircleDisplay.setDimAlpha(80);
+                        severeCircleDisplay.setTouchEnabled(true);
+                        severeCircleDisplay.setUnit("%");
+                        severeCircleDisplay.setColor(R.color.red);
+                        severeCircleDisplay.setTextSize(10);
+                        severeCircleDisplay.setStepSize(0.5f);
+                        float resultSevereFloat = Float.parseFloat(results.get(3).toString());
+                        severeCircleDisplay.showValue(resultSevereFloat, 100f, true);
+                    }
+                    if (results.get(4) != null) {
+                        proliferativeCircleDisplay.setAnimDuration(4000);
+                        proliferativeCircleDisplay.setValueWidthPercent(55f);
+                        proliferativeCircleDisplay.setFormatDigits(1);
+                        proliferativeCircleDisplay.setDimAlpha(80);
+                        proliferativeCircleDisplay.setTouchEnabled(true);
+                        proliferativeCircleDisplay.setUnit("%");
+                        proliferativeCircleDisplay.setColor(R.color.red);
+                        proliferativeCircleDisplay.setTextSize(10);
+                        proliferativeCircleDisplay.setStepSize(0.5f);
+                        float resultProFloat = Float.parseFloat(results.get(4).toString());
+                        proliferativeCircleDisplay.showValue(resultProFloat, 100f, true);
+                    }
+
+                    //textViewResult.setText(results.toString());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                //    Bitmap yourSelectedImage = BitmapFactory.decodeStream(imageStream);
+            }
+
+        });
 
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,11 +159,12 @@ public class ClassifyFragment extends Fragment {
 
     private void windUpWidgets(View view) {
         mImageView = view.findViewById(R.id.imageView);
-        imageViewResult = view.findViewById(R.id.imageViewResult);
-        textViewResult = view.findViewById(R.id.textViewResult);
         btnDetectObject = view.findViewById(R.id.button_detect);
-        mResultCardView = view.findViewById(R.id.resultCardView);
-
+        noDrCircleDisplay = view.findViewById(R.id.noDrCircleView);
+        mildCircleDisplay = view.findViewById(R.id.mildCircleView);
+        severeCircleDisplay = view.findViewById(R.id.severeCircleView);
+        proliferativeCircleDisplay = view.findViewById(R.id.proliferativeCircleView);
+        moderateCircleDisplay = view.findViewById(R.id.moderateCircleView);
     }
 
     private void pickFromGallery() {

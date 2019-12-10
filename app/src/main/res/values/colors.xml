@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#fafafa</color>
     <color name="textColorPrimary">#fff</color>
     <color name="buttonBlue">#1D8ECE</color>
+    <color name ="red">#c62828</color>
     <color name="divider">#aaa</color>
     <color name="appBarColor">#000</color>
     <color name="lighter_black_bg">#666</color>
