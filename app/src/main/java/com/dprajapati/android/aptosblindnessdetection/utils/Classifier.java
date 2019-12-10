@@ -1,6 +1,6 @@
-package com.dprajapati.android.aptosblindnessdetection.ml;
+package com.dprajapati.android.aptosblindnessdetection.utils;
 
-import android.annotation.SuppressLint;
+
 import android.graphics.Bitmap;
 
 import java.util.List;
@@ -11,66 +11,61 @@ public interface Classifier {
          * A unique identifier for what has been recognized. Specific to the class, not the instance of
          * the object.
          */
-        private final String id;
+        private final String mId;
 
         /**
          * Display name for the recognition.
          */
-        private final String title;
+        private final String mTitle;
 
         /**
          * Whether or not the model features quantized or float weights.
          */
-        private final boolean quant;
+        private final boolean mQuantization;
 
         /**
          * A sortable score for how good the recognition is relative to others. Higher should be better.
          */
         private final Float confidence;
 
-        public Recognition(
-                final String id, final String title, final Float confidence, final boolean quant) {
-            this.id = id;
-            this.title = title;
+        Recognition(
+                final String id, final String title, final Float confidence, final boolean quantization) {
+            this.mId = id;
+            this.mTitle = title;
             this.confidence = confidence;
-            this.quant = quant;
-        }
-
-        public String getId() {
-            return id;
+            this.mQuantization = quantization;
         }
 
         public String getTitle() {
-            return title;
+            return mTitle;
         }
 
         public Float getConfidence() {
             return confidence;
         }
 
-        @SuppressLint("DefaultLocale")
         @Override
         public String toString() {
             String resultString = "";
-//            if (title != null) {
-//                resultString += title + " ";
+//            if (mTitle != null) {
+//                resultString += mTitle + " ";
 //            }
 
             if (confidence != null) {
-                resultString +=  confidence * 100.0f;
+                resultString += confidence * 100.0f;
             }
 
             return resultString;
         }
 
-        public float toFloat(){
+        public float toFloat() {
             float result = 0;
             if (confidence != null) {
                 result = confidence * 100.0f;
             }
             return result;
         }
-        
+
     }
 
 

@@ -1,13 +1,16 @@
-package com.dprajapati.android.aptosblindnessdetection;
+package com.dprajapati.android.aptosblindnessdetection.main;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+
+import com.dprajapati.android.aptosblindnessdetection.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

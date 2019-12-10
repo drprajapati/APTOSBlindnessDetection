@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blindness Detection</string>
+    <string name="app_name">APTOS Blindness Detection</string>
     <string name="detect">Detect</string>
     <string name="clear">Clear</string>
     <string name="preview_scaled">0</string>

@@ -2,11 +2,11 @@ package com.dprajapati.android.aptosblindnessdetection.splash;
 
 import android.os.Bundle;
 
-import com.dprajapati.android.aptosblindnessdetection.MainActivity;
-import com.dprajapati.android.aptosblindnessdetection.R;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.dprajapati.android.aptosblindnessdetection.R;
+import com.dprajapati.android.aptosblindnessdetection.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
     @Override

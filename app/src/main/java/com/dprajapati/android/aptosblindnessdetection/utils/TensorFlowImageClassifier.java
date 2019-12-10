@@ -1,4 +1,4 @@
-package com.dprajapati.android.aptosblindnessdetection.ml;
+package com.dprajapati.android.aptosblindnessdetection.utils;
 
 import android.annotation.SuppressLint;
 import android.content.res.AssetFileDescriptor;
@@ -16,7 +16,6 @@ import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -26,13 +25,13 @@ public class TensorFlowImageClassifier implements Classifier {
     private static final int PIXEL_SIZE = 3;
     private static final float THRESHOLD = 0.1f;
 
-    private static final int IMAGE_MEAN = 128;
-    private static final float IMAGE_STD = 128.0f;
+    // private static final int IMAGE_MEAN = 128;
+    // private static final float IMAGE_STD = 128.0f;
 
     private Interpreter interpreter;
     private int inputSize;
     private List<String> labelList;
-    private boolean quant;
+    private boolean mQuantization;
 
     private TensorFlowImageClassifier() {
 
@@ -48,7 +47,7 @@ public class TensorFlowImageClassifier implements Classifier {
         classifier.interpreter = new Interpreter(classifier.loadModelFile(assetManager, modelPath), new Interpreter.Options());
         classifier.labelList = classifier.loadLabelList(assetManager, labelPath);
         classifier.inputSize = inputSize;
-        classifier.quant = quant;
+        classifier.mQuantization = quant;
 
         return classifier;
     }
@@ -56,12 +55,12 @@ public class TensorFlowImageClassifier implements Classifier {
     @Override
     public List<Recognition> recognizeImage(Bitmap bitmap) {
         ByteBuffer byteBuffer = convertBitmapToByteBuffer(bitmap);
-        if(quant){
+        if (mQuantization) {
             byte[][] result = new byte[1][labelList.size()];
             interpreter.run(byteBuffer, result);
             return getSortedResultByte(result);
         } else {
-            float [][] result = new float[1][labelList.size()];
+            float[][] result = new float[1][labelList.size()];
             interpreter.run(byteBuffer, result);
             return getSortedResultFloat(result);
         }
@@ -97,7 +96,7 @@ public class TensorFlowImageClassifier implements Classifier {
     private ByteBuffer convertBitmapToByteBuffer(Bitmap bitmap) {
         ByteBuffer byteBuffer;
 
-        if(quant) {
+        if (mQuantization) {
             byteBuffer = ByteBuffer.allocateDirect(BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE);
         } else {
             byteBuffer = ByteBuffer.allocateDirect(4 * BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE);
@@ -110,11 +109,11 @@ public class TensorFlowImageClassifier implements Classifier {
         for (int i = 0; i < inputSize; ++i) {
             for (int j = 0; j < inputSize; ++j) {
                 final int val = intValues[pixel++];
-                if(quant){
+                if (mQuantization) {
                     byteBuffer.put((byte) val);
                 } else {
 //
-                    byteBuffer.putFloat(converToGrayScale(val));
+                    byteBuffer.putFloat(convertToGrayScale(val));
                 }
 
             }
@@ -122,7 +121,7 @@ public class TensorFlowImageClassifier implements Classifier {
         return byteBuffer;
     }
 
-    private float converToGrayScale(int color) {
+    private float convertToGrayScale(int color) {
         return (((color >> 16) & 0xFF) + ((color >> 8) & 0xFF) + (color & 0xFF)) / 3.0f / 255.0f;
     }
 
@@ -132,19 +131,15 @@ public class TensorFlowImageClassifier implements Classifier {
         PriorityQueue<Recognition> pq =
                 new PriorityQueue<>(
                         MAX_RESULTS,
-                        new Comparator<Recognition>() {
-                            @Override
-                            public int compare(Recognition lhs, Recognition rhs) {
-                                return Float.compare(rhs.getConfidence(), lhs.getConfidence());
-                            }
-                        });
+                        (lhs, rhs) -> Float.compare(rhs.getConfidence(), lhs.getConfidence()));
 
         for (int i = 0; i < labelList.size(); ++i) {
             float confidence = (labelProbArray[0][i] & 0xff) / 255.0f;
             if (confidence > THRESHOLD) {
+                labelList.size();
                 pq.add(new Recognition("" + i,
-                        labelList.size() > i ? labelList.get(i) : "unknown",
-                        confidence, quant));
+                        labelList.get(i),
+                        confidence, mQuantization));
             }
         }
 
@@ -163,19 +158,15 @@ public class TensorFlowImageClassifier implements Classifier {
         PriorityQueue<Recognition> pq =
                 new PriorityQueue<>(
                         MAX_RESULTS,
-                        new Comparator<Recognition>() {
-                            @Override
-                            public int compare(Recognition lhs, Recognition rhs) {
-                                return Float.compare(rhs.getConfidence(), lhs.getConfidence());
-                            }
-                        });
+                        (lhs, rhs) -> Float.compare(rhs.getConfidence(), lhs.getConfidence()));
 
         for (int i = 0; i < labelList.size(); ++i) {
             float confidence = labelProbArray[0][i];
             if (confidence > THRESHOLD) {
+                labelList.size();
                 pq.add(new Recognition("" + i,
-                        labelList.size() > i ? labelList.get(i) : "unknown",
-                        confidence, quant));
+                        labelList.get(i),
+                        confidence, mQuantization));
             }
         }
 
