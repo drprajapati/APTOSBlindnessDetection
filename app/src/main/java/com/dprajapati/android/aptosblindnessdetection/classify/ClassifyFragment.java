@@ -60,11 +60,11 @@ public class ClassifyFragment extends Fragment {
                 InputStream imageStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri);
                 Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
                 bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
-
                 final List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
+                mProgressBarLayout.removeAllViews();
                 for (Classifier.Recognition result : results) {
                     Log.d("Hello", result.getTitle() + ";" + result.getConfidence());
-                    ProgressBar progressBar = new ProgressBar(getActivity().getApplicationContext(),
+                    ProgressBar progressBar = new ProgressBar(this.getActivity(),
                             null, android.R.attr.progressBarStyleHorizontal);
                     AppCompatTextView textView = new AppCompatTextView(getActivity().getApplicationContext(),
                             null, android.R.attr.text);
@@ -74,7 +74,6 @@ public class ClassifyFragment extends Fragment {
                     progressBar.setIndeterminate(false);
                     progressBar.setMax(100);
                     progressBar.setProgress(Math.round(result.getConfidence() * 100));
-                    mProgressBarLayout.removeAllViews();
                     mProgressBarLayout.addView(textView);
                     mProgressBarLayout.addView(progressBar);
                 }
