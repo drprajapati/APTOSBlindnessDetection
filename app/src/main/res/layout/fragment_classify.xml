@@ -85,11 +85,12 @@
         app:strokeColor="#fff"
         app:strokeWidth="2dp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/resultTextView"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/progress_bar_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ResultTextView"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintBottom_toTopOf="@+id/file_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -10,11 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.widget.TextViewCompat;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
 
 import com.dprajapati.android.aptosblindnessdetection.R;
@@ -26,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -44,7 +46,9 @@ public class ClassifyFragment extends Fragment {
     private Uri imageUri;
     private MaterialButton mClassifyButton, mChooseImageButton;
     private AppCompatImageView mImageView;
-    private AppCompatTextView mResultTextView;
+    private LinearLayoutCompat mProgressBarLayout;
+
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,8 +62,22 @@ public class ClassifyFragment extends Fragment {
                 bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
 
                 final List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
-
-                mResultTextView.setText(results.toString());
+                for (Classifier.Recognition result : results) {
+                    Log.d("Hello", result.getTitle() + ";" + result.getConfidence());
+                    ProgressBar progressBar = new ProgressBar(getActivity().getApplicationContext(),
+                            null, android.R.attr.progressBarStyleHorizontal);
+                    AppCompatTextView textView = new AppCompatTextView(getActivity().getApplicationContext(),
+                            null, android.R.attr.text);
+                    textView.setTextColor(getResources().getColor(R.color.textColorPrimary));
+                    textView.setText(String.format(Locale.getDefault(),
+                            "%s : %f %s", result.getTitle(), result.getConfidence() * 100.0f, "%"));
+                    progressBar.setIndeterminate(false);
+                    progressBar.setMax(100);
+                    progressBar.setProgress(Math.round(result.getConfidence() * 100));
+                    mProgressBarLayout.removeAllViews();
+                    mProgressBarLayout.addView(textView);
+                    mProgressBarLayout.addView(progressBar);
+                }
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -76,7 +94,7 @@ public class ClassifyFragment extends Fragment {
         mImageView = view.findViewById(R.id.retina_image_view);
         mClassifyButton = view.findViewById(R.id.button_detect);
         mChooseImageButton = view.findViewById(R.id.file_button);
-        mResultTextView = view.findViewById(R.id.resultTextView);
+        mProgressBarLayout = view.findViewById(R.id.progress_bar_layout);
     }
 
     private void pickFromGallery() {
