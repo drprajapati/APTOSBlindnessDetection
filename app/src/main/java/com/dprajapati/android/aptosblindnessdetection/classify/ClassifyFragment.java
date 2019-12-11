@@ -101,6 +101,7 @@ public class ClassifyFragment extends Fragment {
         gallery.setType("image/*");
         gallery.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
+        mProgressBarLayout.removeAllViews();
         mClassifyButton.setClickable(true);
     }
 
