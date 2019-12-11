@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
 
 import com.dprajapati.android.aptosblindnessdetection.R;
@@ -42,7 +44,7 @@ public class ClassifyFragment extends Fragment {
     private Uri imageUri;
     private MaterialButton mClassifyButton, mChooseImageButton;
     private AppCompatImageView mImageView;
-
+    private AppCompatTextView mResultTextView;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,10 +56,10 @@ public class ClassifyFragment extends Fragment {
                 InputStream imageStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri);
                 Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
                 bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
-                List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
-                for (Classifier.Recognition result : results) {
-                    Log.d("Hello", result.getTitle() + ";" + result.getConfidence());
-                }
+
+                final List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
+
+                mResultTextView.setText(results.toString());
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -74,6 +76,7 @@ public class ClassifyFragment extends Fragment {
         mImageView = view.findViewById(R.id.retina_image_view);
         mClassifyButton = view.findViewById(R.id.button_detect);
         mChooseImageButton = view.findViewById(R.id.file_button);
+        mResultTextView = view.findViewById(R.id.resultTextView);
     }
 
     private void pickFromGallery() {

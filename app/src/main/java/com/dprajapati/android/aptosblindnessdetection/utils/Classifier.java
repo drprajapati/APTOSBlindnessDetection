@@ -47,9 +47,12 @@ public interface Classifier {
         @Override
         public String toString() {
             String resultString = "";
-//            if (mTitle != null) {
-//                resultString += mTitle + " ";
-//            }
+            if (mId != null) {
+                resultString += "[" + mId + "] ";
+            }
+            if (mTitle != null) {
+                resultString += mTitle + " ";
+            }
 
             if (confidence != null) {
                 resultString += confidence * 100.0f;

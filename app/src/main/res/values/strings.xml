@@ -17,10 +17,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="about">About</string>
-    <string name="objective">\t \t \t Imagine being able to detect blindness before it happened. Millions of people suffer from diabetic retinopathy, the leading cause of blindness among working aged adults.
-     \n\n   \t \t \t Aravind Eye Hospital in India hopes to detect and prevent this disease among people living in rural areas where medical screening is difficult to conduct.
-     \n\n  \t \t \t Successful entries in this competition will improve the hospital’s ability to identify potential patients. Further, the solutions will be spread to other Ophthalmologists through the 4th Asia Pacific Tele-Ophthalmology Society (APTOS) Symposium Currently, Aravind technicians travel to these rural areas to capture images and then rely on highly trained doctors to review the images and provide diagnosis.
-     \n\n   \t \t \t Their goal is to scale their efforts through technology; to gain the ability to automatically screen images for disease and provide information on how severe the condition may be.</string>
+    <string name="objective">\t \tImagine being able to detect blindness before it happened. Millions of people suffer from diabetic retinopathy, the leading cause of blindness among working aged adults.
+     \n\n   \t \tAravind Eye Hospital in India hopes to detect and prevent this disease among people living in rural areas where medical screening is difficult to conduct. Successful entries in this competition will improve the hospital’s ability to identify potential patients.
+     \n\n  \t \tFurther, the solutions will be spread to other Ophthalmologists through the 4th Asia Pacific Tele-Ophthalmology Society (APTOS) Symposium Currently, Aravind technicians travel to these rural areas to capture images and then rely on highly trained doctors to review the images and provide diagnosis.
+     \n\n   \t \tTheir goal is to scale their efforts through technology; to gain the ability to automatically screen images for disease and provide information on how severe the condition may be.</string>
     <string name="guide_fac">Hemant Yadav</string>
     <string name="email">hemantyadav.it@charusat.ac.in</string>
     <string name="developed_by_header_label">Developed By</string>
