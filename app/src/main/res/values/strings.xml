@@ -17,10 +17,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="about">About</string>
-    <string name="objective">\t \tImagine being able to detect blindness before it happened. Millions of people suffer from diabetic retinopathy, the leading cause of blindness among working aged adults.
-     \n\n   \t \tAravind Eye Hospital in India hopes to detect and prevent this disease among people living in rural areas where medical screening is difficult to conduct. Successful entries in this competition will improve the hospital’s ability to identify potential patients.
-     \n\n  \t \tFurther, the solutions will be spread to other Ophthalmologists through the 4th Asia Pacific Tele-Ophthalmology Society (APTOS) Symposium Currently, Aravind technicians travel to these rural areas to capture images and then rely on highly trained doctors to review the images and provide diagnosis.
-     \n\n   \t \tTheir goal is to scale their efforts through technology; to gain the ability to automatically screen images for disease and provide information on how severe the condition may be.</string>
+    <string name="objective">\t \tDiabetes is an widespread disease in the world, and up to 2014 around 422 million people worldwide have this disease. Diabetic Retinopathy (DR) is an eye disease caused by the long-standing diabetes.
+        Basically, DR affects blood vessels in the light-sensitive tissue (i.e retina). It becomes the leading cause of vision impairment and blindness for working-age adults in the world today, and around half of Americans with diabetes have this disease to some extent.
+        \n\n \t \tA widely-known challenge for DR is that it has no early warning sign, even for diabetic macular edema. Thus, it is highly desired that DR can be detected in time. Unfortunately, in practice the current DR detection solution is nearly infeasible to meet this requirement.
+        Specifically, the current solution requires a well-trained clinician and ophthalmologist to manually evaluate digital color fundus photographs of retina, and DR is identified by locating the lesions associated with vascular abnormalities due to diabetes.
+        \n\n \t \tThough this current solution is effective, it is time-consuming and highly relies on the expertise of well-trained practitioners. To solve this issue, in the past few years considerable efforts have been put on developing an automated solution for DR detection.
+        In this project, we have used a MobileNetv2 CNN model already trained on the ImageNet database, and fine-tuned it to work for this case. This approach not only uses less computation power but also gives accuracy of 91 %, which can be considered an appropriate solution for such medical image analysis task.</string>
     <string name="guide_fac">Hemant Yadav</string>
     <string name="email">hemantyadav.it@charusat.ac.in</string>
     <string name="developed_by_header_label">Developed By</string>
